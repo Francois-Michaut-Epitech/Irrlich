@@ -115,6 +115,7 @@ VERSION = $(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_RELEASE)
 SHARED_FULLNAME = $(SHARED_LIB).$(VERSION)
 SONAME = $(SHARED_LIB).$(VERSION_MAJOR).$(VERSION_MINOR)
 MKDIR_EXE = mkdir
+LN_EXE = ln
 
 ####################
 # All target, builds Irrlicht as static lib (libIrrlicht.a) and copies it into lib/Linux
@@ -151,12 +152,12 @@ sharedlib_osx: $(LINKOBJ)
 
 # Installs Irrlicht if it was created as shared lib
 install install_osx:
-	rm -rf $(INSTALL_DIR)/../include/irrlicht
+	$(RM) -r $(INSTALL_DIR)/../include/irrlicht
 	$(MKDIR_EXE) -p $(INSTALL_DIR)/../include/irrlicht
 	cp ../../include/*.h $(INSTALL_DIR)/../include/irrlicht/
 	cp $(LIB_PATH)/$(SHARED_FULLNAME) $(INSTALL_DIR)
-	cp $(INSTALL_DIR) && ln -s -f $(SHARED_FULLNAME) $(SONAME)
-	cp $(INSTALL_DIR) && ln -s -f $(SONAME) $(SHARED_LIB)
+	cd $(INSTALL_DIR) && $(LN_EXE) -s -f $(SHARED_FULLNAME) $(SONAME)
+	cd $(INSTALL_DIR) && $(LN_EXE) -s -f $(SONAME) $(SHARED_LIB)
 #	ldconfig -n $(INSTALL_DIR)
 
 TAGS:
