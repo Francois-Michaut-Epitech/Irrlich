@@ -152,13 +152,20 @@ sharedlib_osx: $(LINKOBJ)
 
 # Installs Irrlicht if it was created as shared lib
 install install_osx:
-	$(RM) -r $(INSTALL_DIR)/../include/irrlicht
-	$(MKDIR_EXE) -p $(INSTALL_DIR)/../include/irrlicht
+	rm -r $(INSTALL_DIR)/../include/irrlicht
+	mkdir -p $(INSTALL_DIR)/../include/irrlicht
 	cp ../../include/*.h $(INSTALL_DIR)/../include/irrlicht/
 	cp $(LIB_PATH)/$(SHARED_FULLNAME) $(INSTALL_DIR)
-	cd $(INSTALL_DIR) && $(LN_EXE) -s -f $(SHARED_FULLNAME) $(SONAME)
-	cd $(INSTALL_DIR) && $(LN_EXE) -s -f $(SONAME) $(SHARED_LIB)
+	cd $(INSTALL_DIR) && ln -s -f $(SHARED_FULLNAME) $(SONAME)
+	cd $(INSTALL_DIR) && ln -s -f $(SONAME) $(SHARED_LIB)
 #	ldconfig -n $(INSTALL_DIR)
+
+# Installs Irrlicht if it was created as shared lib
+install_win32:
+	$(RM) -rf $(INSTALL_DIR)/../include/irrlicht
+	$(MKDIR_EXE) -p $(INSTALL_DIR)/../include/irrlicht
+	cp ../../include/*.h $(INSTALL_DIR)/../include/irrlicht/
+	cp $(IRRLICHT_DLL) $(INSTALL_DIR)
 
 TAGS:
 	ctags *.cpp ../../include/*.h *.h
