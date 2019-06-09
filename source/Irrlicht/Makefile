@@ -164,7 +164,8 @@ install_win32:
 	$(RM) -rf $(INSTALL_DIR)/../include/irrlicht
 	$(MKDIR_EXE) -p $(INSTALL_DIR)/../include/irrlicht
 	cp ../../include/*.h $(INSTALL_DIR)/../include/irrlicht/
-	cp $(IRRLICHT_DLL) $(INSTALL_DIR)
+	cp ../../lib/Win32-gcc/$(STATIC_LIB) $(INSTALL_DIR)
+	cp $(IRRLICHT_DLL) ../../../..
 
 TAGS:
 	ctags *.cpp ../../include/*.h *.h
