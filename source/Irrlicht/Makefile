@@ -102,7 +102,7 @@ sharedlib_osx: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm
 #sharedlib_osx: LDFLAGS += -framework cocoa -framework carbon -framework opengl -framework IOKit
 
 #Windows specific options
-IRRLICHT_DLL := ../../bin/Win32-VisualStudio/Irrlicht.dll
+IRRLICHT_DLL := ../../bin/Win32-gcc/Irrlicht.dll
 sharedlib_win32 staticlib_win32: SYSTEM = Win32-gcc
 sharedlib_win32: LDFLAGS += -lgdi32 -lopengl32 -ld3dx9d -lwinmm -Wl,--add-stdcall-alias
 #choose either -DIRR_COMPILE_WITH_DX9_DEV_PACK or -DNO_IRR_COMPILE_WITH_DIRECT3D_9_ depending if you need dx9
@@ -138,7 +138,7 @@ staticlib staticlib_osx: $(STATIC_LIB)
 # Builds Irrlicht as dll (Irrlicht.dll) into ../../bin/Win32-gcc
 all_win32 win32: sharedlib_win32
 sharedlib_win32: $(IRRLICHT_DLL)
-../../bin/Win32-gcc/Irrlicht.dll: $(LINKOBJ)
+$(IRRLICHT_DLL): $(LINKOBJ)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -shared -o $@ $^ $(LDFLAGS) -Wl,--out-implib,../../lib/Win32-gcc/$(STATIC_LIB)
 # Copies static lib into /lib/Win32-gcc
 staticlib_win32: $(STATIC_LIB)
@@ -160,12 +160,12 @@ install install_osx:
 #	ldconfig -n $(INSTALL_DIR)
 
 # Installs Irrlicht if it was created as shared lib
-install_win32:
+install_win32 sharedlib_win32:
 	$(RM) -rf $(INSTALL_DIR)/../include/irrlicht
 	$(MKDIR_EXE) -p $(INSTALL_DIR)/../include/irrlicht
 	cp ../../include/*.h $(INSTALL_DIR)/../include/irrlicht/
 	cp ../../lib/Win32-gcc/$(STATIC_LIB) $(INSTALL_DIR)
-	cp $(IRRLICHT_DLL) ../../../..
+	cp ../../bin/Win32-VisualStudio/Irrlicht.dll ../../../..
 
 TAGS:
 	ctags *.cpp ../../include/*.h *.h
