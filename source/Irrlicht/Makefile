@@ -123,7 +123,7 @@ all linux: staticlib
 # Builds Irrlicht as shared lib (libIrrlicht.so.versionNumber) and copies it into lib/Linux
 sharedlib: $(LINKOBJ)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -shared -Wl,-soname,$(SONAME) -o $(SHARED_FULLNAME) $^ $(LDFLAGS)
-	mkdir -p $(LIB_PATH)
+	$(MKDIR_EXE) -p $(LIB_PATH)
 	cp $(SHARED_FULLNAME) $(LIB_PATH)
 
 # Builds Irrlicht as static lib (libIrrlicht.a)
