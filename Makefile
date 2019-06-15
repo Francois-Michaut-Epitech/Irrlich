@@ -3,7 +3,7 @@ MKDIR_EXE	=	mkdir
 INSTALL_DIR	=	/Irrlicht
 
 all:
-	$(MKDIR_EXE) -p $(INSTALL_DIR)\include\irrlicht
-	mv .\include $(INSTALL_DIR)\include\irrlicht
+	$(MKDIR_EXE) -p "$(INSTALL_DIR)\include"
+	cp -r .\include $(INSTALL_DIR)\include\irrlicht
 	cp Irrlicht.lib $(INSTALL_DIR)\lib
 	cp Irrlicht.dll ../..
